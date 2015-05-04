@@ -161,6 +161,20 @@ module Lcd
       result
     end
 
+    def make0
+      result = []
+      result << (SPACE + (HYPHEN * size) + SPACE)
+      size.times do
+        result << (PIPE + (SPACE * size) + PIPE)
+      end
+      result << empty_line
+      size.times do
+        result << (PIPE + (SPACE * size) + PIPE)
+      end
+      result << (SPACE + (HYPHEN * size) + SPACE)
+      result
+    end
+
     def empty_line
       SPACE * (size + 2)
     end
@@ -176,7 +190,7 @@ module Lcd
 
     def validate_inputs
       raise ArgumentError, "Invalid size! Received #{size}" unless (1...10).include? size
-      raise ArgumentError, "Invalid number! Received #{number}" unless (1...99_999_999).include? number
+      raise ArgumentError, "Invalid number! Received #{number}" unless (0...99_999_999).include? number
     end
 
     def self.parse(input_string)
