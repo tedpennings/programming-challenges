@@ -45,139 +45,129 @@ module Lcd
     private
 
     def make1
-      result = [] << empty_line
-      2.times do # NOT size.times
-        size.times { result << [(SPACE * (size + 1)) << PIPE] }
-        result << empty_line
+      result = []
+      result.concat empty_line(1)
+      2.times do
+        result.concat right_pipe(size)
+        result.concat empty_line(1)
       end
       result
     end
 
     def make2
       result = []
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      size.times do
-        result << ((SPACE * (size + 1)) + PIPE)
-      end
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      size.times do
-        result << (PIPE + (SPACE * (size + 1)))
-      end
-      result << (SPACE + (HYPHEN * size) + SPACE)
+      result.concat hyphens(1)
+      result.concat right_pipe(size)
+      result.concat hyphens(1)
+      result.concat left_pipe(size)
+      result.concat hyphens(1)
       result
     end
 
     def make3
       result = []
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      size.times do
-        result << ((SPACE * (size + 1)) + PIPE)
-      end
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      size.times do
-        result << ((SPACE * (size + 1)) + PIPE)
-      end
-      result << (SPACE + (HYPHEN * size) + SPACE)
+      result.concat hyphens(1)
+      result.concat right_pipe(size)
+      result.concat hyphens(1)
+      result.concat right_pipe(size)
+      result.concat hyphens(1)
       result
     end
 
     def make4
       result = []
-      result << empty_line
-      size.times do
-        result << (PIPE + (SPACE * size) + PIPE)
-      end
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      size.times do
-        result << ((SPACE * (size + 1)) + PIPE)
-      end
-      result << empty_line
+      result.concat empty_line(1)
+      result.concat pipe_space_pipe(size)
+      result.concat hyphens(1)
+      result.concat right_pipe(size)
+      result.concat empty_line(1)
       result
     end
 
     def make5
       result = []
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      size.times do
-        result << (PIPE + (SPACE * (size + 1)))
-      end
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      size.times do
-        result << ((SPACE * (size + 1)) + PIPE)
-      end
-      result << (SPACE + (HYPHEN * size) + SPACE)
+      result.concat hyphens(1)
+      result.concat left_pipe(size)
+      result.concat hyphens(1)
+      result.concat right_pipe(size)
+      result.concat hyphens(1)
       result
     end
 
     def make6
       result = []
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      size.times do
-        result << (PIPE + (SPACE * (size + 1)))
-      end
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      size.times do
-        result << (PIPE + (SPACE * size) + PIPE)
-      end
-      result << (SPACE + (HYPHEN * size) + SPACE)
+      result.concat hyphens(1)
+      result.concat left_pipe(size)
+      result.concat hyphens(1)
+      result.concat pipe_space_pipe(size)
+      result.concat hyphens(1)
       result
     end
 
     def make7
       result = []
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      2.times do # NOT size.times
-        size.times { result << [(SPACE * (size + 1)) << PIPE] }
-        result << empty_line
+      result.concat hyphens(1)
+      2.times do
+        result.concat right_pipe(size)
+        result.concat empty_line(1)
       end
       result
     end
 
     def make8
       result = []
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      size.times do
-        result << (PIPE + (SPACE * size) + PIPE)
-      end
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      size.times do
-        result << (PIPE + (SPACE * size) + PIPE)
-      end
-      result << (SPACE + (HYPHEN * size) + SPACE)
+      result.concat hyphens(1)
+      result.concat pipe_space_pipe(size)
+      result.concat hyphens(1)
+      result.concat pipe_space_pipe(size)
+      result.concat hyphens(1)
       result
     end
 
     def make9
       result = []
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      size.times do
-        result << (PIPE + (SPACE * size) + PIPE)
-      end
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      size.times do
-        result << [(SPACE * (size + 1)) << PIPE]
-      end
-      result << (SPACE + (HYPHEN * size) + SPACE)
+      result.concat hyphens(1)
+      result.concat pipe_space_pipe(size)
+      result.concat hyphens(1)
+      result.concat right_pipe(size)
+      result.concat hyphens(1)
       result
     end
 
     def make0
       result = []
-      result << (SPACE + (HYPHEN * size) + SPACE)
-      size.times do
-        result << (PIPE + (SPACE * size) + PIPE)
-      end
-      result << empty_line
-      size.times do
-        result << (PIPE + (SPACE * size) + PIPE)
-      end
-      result << (SPACE + (HYPHEN * size) + SPACE)
+      result.concat hyphens(1)
+      result.concat pipe_space_pipe(size)
+      result.concat empty_line(1)
+      result.concat pipe_space_pipe(size)
+      result.concat hyphens(1)
       result
     end
 
-    def empty_line
-      SPACE * (size + 2)
+    def copies_of(times, &block)
+      (1..times).map(&block)
     end
+
+    def empty_line(times)
+      copies_of(times) { SPACE * (size + 2) }
+    end
+
+    def hyphens(times)
+      copies_of(times) { (SPACE + (HYPHEN * size) + SPACE) }
+    end
+
+    def pipe_space_pipe(times)
+      copies_of(times) { (PIPE + (SPACE * size) + PIPE) }
+    end
+
+    def left_pipe(times)
+      copies_of(times) { (PIPE + (SPACE * (size + 1))) }
+    end
+
+    def right_pipe(times)
+      copies_of(times) { ((SPACE * (size + 1)) + PIPE) }
+    end
+
   end
 
   class Parser
