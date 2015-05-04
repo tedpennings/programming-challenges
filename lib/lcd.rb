@@ -25,7 +25,7 @@ module Lcd
     lines_to_display.each_with_index do |display_config, index|
       puts "\n" if index > 0
       # display_config is a string like '3 128'
-      Parser.parse(display_config).to_display.print
+      Parser.parse(display_config).print
     end
   end
 

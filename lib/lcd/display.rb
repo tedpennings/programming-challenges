@@ -9,6 +9,7 @@ module Lcd
     def initialize(size, number)
       @size = size
       @number = number
+      validate
     end
 
     def content
@@ -28,6 +29,11 @@ module Lcd
     end
 
     private
+
+    def validate
+      raise ArgumentError, "Invalid size! Received #{size}" unless (1...10).include? size
+      raise ArgumentError, "Invalid number! Received #{number}" unless (0...99_999_999).include? number
+    end
 
     # Returns an array of arrays. The outer array represents each digit.
     # The inner array is each line of ASCII needed to print that digit.

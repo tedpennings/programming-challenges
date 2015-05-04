@@ -25,7 +25,7 @@ describe Lcd do
     expect { Lcd.print_from_file(file) }.to output(expected).to_stdout
   end
 
-  describe Lcd::Parser do
+  describe "parsing" do
     it "can read a simple string" do
       parsed = Lcd::Parser.parse '4 30'
       expect(parsed.number).to be(30)
@@ -34,6 +34,22 @@ describe Lcd do
 
     it "raises an ArgumentError when parsing fails" do
       expect { Lcd::Parser.parse '4 30zzz' }.to raise_error(ArgumentError)
+    end
+
+    it "raises an argument error when the size is too low" do
+      expect { Lcd::Parser.parse '0 30' }.to raise_error(ArgumentError)
+    end
+
+    it "raises an argument error when the size is too high" do
+      expect { Lcd::Parser.parse '30 40' }.to raise_error(ArgumentError)
+    end
+
+    it "raises an argument error when the number is too low" do
+      expect { Lcd::Parser.parse '3 -1' }.to raise_error(ArgumentError)
+    end
+
+    it "raises an argument error when the number is too high" do
+      expect { Lcd::Parser.parse '3 489202953920' }.to raise_error(ArgumentError)
     end
   end
 
