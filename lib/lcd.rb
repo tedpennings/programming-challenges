@@ -1,15 +1,16 @@
-require 'active_support/core_ext/string'
+# Do I trust activesupport? not right now
+# require 'active_support/core_ext/string'
 
 module Lcd
 
   def self.print_from_text(text)
-    lines = String(text).lines.map(&:strip).reject(&:blank?)
-    terminator = lines.pop
+    trimmed_lines_with_content = String(text).lines.map(&:strip).reject { |l| l =~ /^\s*$/}
+    terminator = trimmed_lines_with_content.pop
     unless terminator =~ /0\s+0/
       # this responsibility could live in the parser...
       raise ArgumentError, "Unexpected format! Expected '0 0' terminator"
     end
-    lines.each do |display_line|
+    trimmed_lines_with_content.each do |display_line|
       Parser.parse(display_line).to_display.print
     end
   end
@@ -28,17 +29,17 @@ module Lcd
     def print
       output = ''
       digit_series = number.to_s.chars.map { |digit| send :"make#{digit}" }
-      total_row_count = (2 * size) + 2
-      puts "digit_series.length #{digit_series.length}"
-      puts "digit_series.map(&:length) #{digit_series.map(&:length)}"
+      total_row_count = (2 * size) + 3
+      # puts "digit_series.map(&:size) #{digit_series.map(&:size)}"
+      # puts "digit_series.map { |d| d.map(&:size) } #{digit_series.map { |d| d.map(&:size) }}"
       (0..total_row_count).each do |row_number|
-        output << extract_combined_row(row_number, digit_series)
+        row = digit_series.map { |digit| digit[row_number] }
+        output << row.join(SPACE)
+        output << "\n" unless row_number == (total_row_count - 1)
+        # puts "current size is #{output.size} for row #{row_number}"
       end
+      # puts "final size is #{output.size}"
       puts output
-    end
-
-    def extract_combined_row(row_num, digit_series)
-      digit_series.map { digit_series[row_num] }.join(SPACE) + "\n"
     end
 
     private
@@ -46,7 +47,7 @@ module Lcd
     def make1
       result = [] << empty_line
       2.times do # NOT size.times
-        result.push ([SPACE * (size + 1) + PIPE] * size)
+        size.times { result << [(SPACE * (size + 1)) << PIPE] }
         result << empty_line
       end
       result
