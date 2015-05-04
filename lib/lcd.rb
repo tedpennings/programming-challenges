@@ -10,7 +10,8 @@ module Lcd
       # this responsibility could live in the parser...
       raise ArgumentError, "Unexpected format! Expected '0 0' terminator"
     end
-    trimmed_lines_with_content.each do |display_line|
+    trimmed_lines_with_content.each_with_index do |display_line, index|
+      puts "\n" if index != 0
       Parser.parse(display_line).to_display.print
     end
   end
