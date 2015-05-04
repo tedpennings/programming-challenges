@@ -27,7 +27,7 @@ describe Lcd do
 
   describe "text dimensions" do
     (1..3).each do |size|
-      (0..120).each do |number|
+      (0..105).step(size).each do |number|
         it "produces the correct height (rows) digit for #{number} in size #{size}" do
           result  = Lcd::Display.new(size, number).content
           rows    = (2 * size) + 3
