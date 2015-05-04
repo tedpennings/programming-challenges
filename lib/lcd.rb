@@ -147,6 +147,20 @@ module Lcd
       result
     end
 
+    def make9
+      result = []
+      result << (SPACE + (HYPHEN * size) + SPACE)
+      size.times do
+        result << (PIPE + (SPACE * size) + PIPE)
+      end
+      result << (SPACE + (HYPHEN * size) + SPACE)
+      size.times do
+        result << [(SPACE * (size + 1)) << PIPE]
+      end
+      result << (SPACE + (HYPHEN * size) + SPACE)
+      result
+    end
+
     def empty_line
       SPACE * (size + 2)
     end
