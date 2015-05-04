@@ -3,7 +3,7 @@ programming-challenges
 
 My solutions to problems from [Programming Challenges](http://www.amazon.com/exec/obidos/ASIN/0387001638) for a New Relic book club.
 
-* [LCD display](lib/lcd.rb) with [tests](spec/lcd_spec.rb)
+* [LCD display](lib/lcd.rb) with [tests](spec/lcd_spec.rb) and [notes](notes/lcd_display.md)
 
 ## Caveats
 
