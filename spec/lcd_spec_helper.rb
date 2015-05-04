@@ -19,6 +19,11 @@ module LcdSpecHelper
       [File.read(input_path), File.read(expected_path)]
     end
 
+    def formatted_name(name)
+      /number_(?<number>[\d\w]+)_size_(?<size>[\d\w]+)/ =~ name
+      "the number #{number} in size #{size} from example #{name}"
+    end
+
   end
 
 end

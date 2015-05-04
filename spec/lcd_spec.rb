@@ -5,7 +5,7 @@ require 'lcd_spec_helper'
 describe Lcd do
 
   LcdSpecHelper.examples_list.each do |example_name|
-    it "properly parses #{example_name}" do
+    it "produces #{LcdSpecHelper.formatted_name(example_name)}" do
       input, expected = LcdSpecHelper.example(example_name)
       expect { Lcd.print_from_text(input) }.to output(expected).to_stdout
     end
