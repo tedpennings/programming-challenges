@@ -36,7 +36,7 @@ module Lcd
 
     def make1
       result = [] << empty_line
-      2.times do
+      2.times do # NOT size.times
         result.push ([SPACE * (size + 1) + PIPE] * size)
         result << empty_line
       end
@@ -46,9 +46,27 @@ module Lcd
     def make2
       result = []
       result << (SPACE + (HYPHEN * size) + SPACE)
-      result << ((SPACE * (size + 1)) + PIPE)
+      size.times do
+        result << ((SPACE * (size + 1)) + PIPE)
+      end
       result << (SPACE + (HYPHEN * size) + SPACE)
-      result << (PIPE + (SPACE * (size + 1)))
+      size.times do
+        result << (PIPE + (SPACE * (size + 1)))
+      end
+      result << (SPACE + (HYPHEN * size) + SPACE)
+      result
+    end
+
+    def make3
+      result = []
+      result << (SPACE + (HYPHEN * size) + SPACE)
+      size.times do
+        result << ((SPACE * (size + 1)) + PIPE)
+      end
+      result << (SPACE + (HYPHEN * size) + SPACE)
+      size.times do
+        result << ((SPACE * (size + 1)) + PIPE)
+      end
       result << (SPACE + (HYPHEN * size) + SPACE)
       result
     end
