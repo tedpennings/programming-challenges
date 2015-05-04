@@ -25,6 +25,30 @@ describe Lcd do
     expect { Lcd.print_from_file(file) }.to output(expected).to_stdout
   end
 
+  describe "text dimensions" do
+    (1..3).each do |size|
+      (0..120).each do |number|
+        it "produces the correct height (rows) digit for #{number} in size #{size}" do
+          result  = Lcd::Display.new(size, number).content
+          rows    = (2 * size) + 3
+          expect(result.lines.length).to eq(rows)
+        end
+
+        it "produces the correct width (columns) digit for #{number} in size #{size}" do
+          result  = Lcd::Display.new(size, number).content
+          chars_in_number = number.to_s.chars.length
+          columns_per_digit = size + 2 # expected per textbook
+          newline_chars = 1 # one newline at end of line
+          whitespace_chars = (chars_in_number - 1) + newline_chars # spaces between digits
+          line_length = (columns_per_digit * chars_in_number) + whitespace_chars
+          result.lines.each do |line|
+            expect(line.length).to eq(line_length)
+          end
+        end
+      end
+    end
+  end
+
   describe "parsing" do
     it "can read a simple string" do
       parsed = Lcd::Parser.parse '4 30'
