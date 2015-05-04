@@ -1,4 +1,6 @@
 module Lcd
+
+  # Parses the user-input per the rules specified in the Lcd module.
   class Parser
     attr_reader :size, :number
     def initialize(size, number)
@@ -13,7 +15,7 @@ module Lcd
     end
 
     def self.parse(input_string)
-      if input_string =~ /^(?<size>\d+)\s(?<number>\d+)\s*$/
+      if input_string =~ /^(?<size>\d+)\s+(?<number>\d+)\s*$/
         new($~[:size].to_i, $~[:number].to_i)
       else
         raise ArgumentError, "Unable to parse #{input_string}! expected an input in the format '4 492'"

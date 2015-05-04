@@ -1,8 +1,11 @@
 module Lcd
+
+  # NOTE! This helper expects to be included in a class that defines the method 'size'
   module DigitHelper
-    HYPHEN = '-'.freeze
-    PIPE   = '|'.freeze
-    SPACE  = ' '.freeze
+    HYPHEN  = '-'.freeze
+    PIPE    = '|'.freeze
+    SPACE   = ' '.freeze
+    NEWLINE = $/
 
     def copies_of(times, &block)
       if times == 1
