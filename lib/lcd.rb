@@ -133,6 +133,20 @@ module Lcd
       result
     end
 
+    def make8
+      result = []
+      result << (SPACE + (HYPHEN * size) + SPACE)
+      size.times do
+        result << (PIPE + (SPACE * size) + PIPE)
+      end
+      result << (SPACE + (HYPHEN * size) + SPACE)
+      size.times do
+        result << (PIPE + (SPACE * size) + PIPE)
+      end
+      result << (SPACE + (HYPHEN * size) + SPACE)
+      result
+    end
+
     def empty_line
       SPACE * (size + 2)
     end
