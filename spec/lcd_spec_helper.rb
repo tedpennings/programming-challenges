@@ -20,7 +20,8 @@ module LcdSpecHelper
     end
 
     def formatted_name(name)
-      if name =~ /number_(?<number>[\d\w]+)_size_(?<size>[\d\w]+)/
+      if name =~ /number_(?<number>[\d]+)_size_(?<size>[\d]+)/
+        # the regex capturing groups here are ugly compared to Lcd::Parser
         "the number #{$~[:number]} in size #{$~[:size]} from example #{name}"
       else
         name
