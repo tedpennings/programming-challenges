@@ -26,10 +26,19 @@ module Lcd
     end
 
     def print
-      digit_series = number.to_s.chars.map do |digit|
-        self.send :"make#{digit}"
+      output = ''
+      digit_series = number.to_s.chars.map { |digit| send :"make#{digit}" }
+      total_row_count = (2 * size) + 2
+      puts "digit_series.length #{digit_series.length}"
+      puts "digit_series.map(&:length) #{digit_series.map(&:length)}"
+      (0..total_row_count).each do |row_number|
+        output << extract_combined_row(row_number, digit_series)
       end
-      puts digit_series
+      puts output
+    end
+
+    def extract_combined_row(row_num, digit_series)
+      digit_series.map { digit_series[row_num] }.join(SPACE) + "\n"
     end
 
     private
@@ -68,6 +77,20 @@ module Lcd
         result << ((SPACE * (size + 1)) + PIPE)
       end
       result << (SPACE + (HYPHEN * size) + SPACE)
+      result
+    end
+
+    def make4
+      result = []
+      result << empty_line
+      size.times do
+        result << (PIPE + (SPACE * size) + PIPE)
+      end
+      result << (SPACE + (HYPHEN * size) + SPACE)
+      size.times do
+        result << ((SPACE * (size + 1)) + PIPE)
+      end
+      result << empty_line
       result
     end
 
