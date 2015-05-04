@@ -4,14 +4,6 @@ require 'lcd_spec_helper'
 
 describe Lcd do
 
-  LcdSpecHelper.examples_list.each do |example_name|
-    # check out spec/lcd_examples/*, for the inputs and expected values
-    it "produces #{LcdSpecHelper.formatted_name(example_name)}" do
-      input, expected = LcdSpecHelper.example(example_name)
-      expect { Lcd.print_from_text(input) }.to output(expected).to_stdout
-    end
-  end
-
   it "can read files given a filename" do
     filename = File.join(File.dirname(__FILE__), 'lcd_examples', 'textbook_example.txt')
     _, expected = LcdSpecHelper.example(:textbook_example)
@@ -25,6 +17,14 @@ describe Lcd do
     expect { Lcd.print_from_file(file) }.to output(expected).to_stdout
   end
 
+  describe "examples from spec/lcd_examples" do
+    LcdSpecHelper.examples_list.each do |example_name|
+      it "produces #{LcdSpecHelper.formatted_name(example_name)}" do
+        input, expected = LcdSpecHelper.example(example_name)
+        expect { Lcd.print_from_text(input) }.to output(expected).to_stdout
+      end
+    end
+  end
   describe "text dimensions" do
     (1..3).each do |size|
       (0..105).step(size).each do |number|
