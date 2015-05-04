@@ -3,6 +3,11 @@ require 'lcd/display'
 
 module Lcd
 
+  def self.print_from_file(file)
+    filename = (file.is_a?(String)) ? file : File.path(file)
+    print_from_text(File.read(filename))
+  end
+
   def self.print_from_text(text)
     trimmed_lines_with_content = String(text).lines.map(&:strip).reject { |l| l =~ /^\s*$/}
     terminator = trimmed_lines_with_content.pop

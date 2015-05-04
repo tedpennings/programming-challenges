@@ -11,6 +11,19 @@ describe Lcd do
     end
   end
 
+  it "can read files given a filename" do
+    filename = File.join(File.dirname(__FILE__), 'lcd_examples', 'textbook_example.txt')
+    _, expected = LcdSpecHelper.example(:textbook_example)
+    expect { Lcd.print_from_file(filename) }.to output(expected).to_stdout
+  end
+
+  it "can read files given a File object" do
+    filename = File.join(File.dirname(__FILE__), 'lcd_examples', 'textbook_example.txt')
+    file = File.new(filename)
+    _, expected = LcdSpecHelper.example(:textbook_example)
+    expect { Lcd.print_from_file(file) }.to output(expected).to_stdout
+  end
+
   describe Lcd::Parser do
     it "can read a simple string" do
       parsed = Lcd::Parser.parse '4 30'
