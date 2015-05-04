@@ -123,6 +123,16 @@ module Lcd
       result
     end
 
+    def make7
+      result = []
+      result << (SPACE + (HYPHEN * size) + SPACE)
+      2.times do # NOT size.times
+        size.times { result << [(SPACE * (size + 1)) << PIPE] }
+        result << empty_line
+      end
+      result
+    end
+
     def empty_line
       SPACE * (size + 2)
     end
