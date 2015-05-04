@@ -32,7 +32,7 @@ module Lcd
       total_row_count = (2 * size) + 3
       # puts "digit_series.map(&:size) #{digit_series.map(&:size)}"
       # puts "digit_series.map { |d| d.map(&:size) } #{digit_series.map { |d| d.map(&:size) }}"
-      (0..total_row_count).each do |row_number|
+      (0...total_row_count).each do |row_number|
         row = digit_series.map { |digit| digit[row_number] }
         output << row.join(SPACE)
         output << "\n" unless row_number == (total_row_count - 1)

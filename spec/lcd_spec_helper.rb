@@ -20,8 +20,11 @@ module LcdSpecHelper
     end
 
     def formatted_name(name)
-      /number_(?<number>[\d\w]+)_size_(?<size>[\d\w]+)/ =~ name
-      "the number #{number} in size #{size} from example #{name}"
+      if name =~ /number_(?<number>[\d\w]+)_size_(?<size>[\d\w]+)/
+        "the number #{$~[:number]} in size #{$~[:size]} from example #{name}"
+      else
+        name
+      end
     end
 
   end
